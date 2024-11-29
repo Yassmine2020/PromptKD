@@ -4,7 +4,8 @@ MASTER_ADDR=localhost
 MASTER_PORT=${2-2012}
 NNODES=1
 NODE_RANK=0
-GPUS_PER_NODE=${3-8}
+# GPUS_PER_NODE=${3-8}
+GPUS_PER_NODE=1
 
 DISTRIBUTED_ARGS="--nproc_per_node $GPUS_PER_NODE \
                   --nnodes $NNODES \
@@ -22,9 +23,11 @@ TEACHER_CKPT="${BASE_PATH}/checkpoints/gpt2/train/sft/gpt2-xlarge/"
 # data
 DATA_DIR="${BASE_PATH}/processed_data/dolly/full/gpt2/"
 # hp
-BATCH_SIZE=2
+# BATCH_SIZE=2
+BATCH_SIZE=4
 LR=0.00005
-GRAD_ACC=16
+# GRAD_ACC=16
+GRAD_ACC=8
 EVAL_BATCH_SIZE=8
 # prompt
 TEACHER_LR=0.00005
@@ -34,7 +37,8 @@ KLD_TYPE="reverse"
 BASE_KLD_TYPE="reverse"
 BASE_COEF=1.0
 # length
-MAX_LENGTH=512
+# MAX_LENGTH=512
+MAX_LENGTH=128
 # runtime
 SAVE_PATH="${BASE_PATH}/results/gpt2/train/promptkd/gpt2-base-xlarge"
 # seed
@@ -72,7 +76,8 @@ OPTS+=" --warmup-iters 100"
 OPTS+=" --lr-decay-style constant"
 OPTS+=" --weight-decay 1e-2"
 OPTS+=" --clip-grad 1.0"
-OPTS+=" --epochs 20"
+# OPTS+=" --epochs 20"
+OPTS+=" --epochs 5"
 OPTS+=" --kd-ratio 0.5"
 # length
 OPTS+=" --max-length ${MAX_LENGTH}"
